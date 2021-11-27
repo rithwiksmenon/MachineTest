@@ -1,0 +1,43 @@
+USE SalesDB;
+
+CREATE TABLE VisitTbale
+(Visit_id INT IDENTITY(1,1) PRIMARY KEY,
+Cust_Name VARCHAR(100),
+Contact_Person VARCHAR(100),
+Contact_No NUMERIC,
+Interest_Product VARCHAR(100),
+Visit_Subject VARCHAR(100),
+Description VARCHAR(100),
+Visit_datetime DATETIME,
+Is_Disabled BIT,
+Is_Deleted BIT,
+Emp_id INT FOREIGN KEY REFERENCES EmployeeRegistration(Emp_id));
+
+CREATE TABLE TBLROLE(
+RoleId INT IDENTITY(1,1) PRIMARY KEY,
+RoleName VARCHAR(50) NOT NULL);
+
+INSERT INTO TBLROLE(RoleName)VALUES ('Admin'),
+('SalesManager');
+
+CREATE TABLE TBLUSER(UserId INT IDENTITY(1,1) PRIMARY KEY,
+UserName VARCHAR(20),UserPassword VARCHAR(20),
+RoleId INT,
+CONSTRAINT FK_LOGIN FOREIGN KEY(RoleId) REFERENCES TBLROLE(RoleId));
+
+INSERT INTO TBLUSER(UserName,UserPassword,RoleId)
+VALUES
+('Sam','sam@123',1),
+('Sanjay','sanjay@123',2),
+('Jay','jay@123',1),
+('Rahul','rahul@123',2);
+
+CREATE TABLE EMPLOYEEREGISTRATION
+(emp_id INT IDENTITY(1,1) PRIMARY KEY,
+FirstName VARCHAR(30),
+LastName VARCHAR(30),
+Age INT,
+Gender VARCHAR(30),
+Address VARCHAR(30),
+PhoneNumber NUMERIC,
+UserId INT FOREIGN KEY REFERENCES TBLUSER(UserId));
